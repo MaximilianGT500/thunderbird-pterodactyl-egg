@@ -1,0 +1,77 @@
+{
+  "_comment": "DO NOT EDIT: FILE GENERATED FOR PTERODACTYL (PTDL_v1)",
+  "meta": {
+    "version": "PTDL_v1",
+    "update_url": null
+  },
+  "exported_at": "2026-01-18T00:00:00+01:00",
+  "name": "Thunderbird (WebVNC/noVNC)",
+  "author": "support@lunoxia.de",
+  "description": "Runs a lightweight desktop (Openbox) with Mozilla Thunderbird and exposes it via WebVNC (noVNC) on the server allocation port.",
+  "features": null,
+  "images": [
+    "ghcr.io/maximiliangt500/thunderbird-pterodactyl-egg:latest"
+  ],
+  "file_denylist": [],
+  "startup": "bash /start.sh",
+  "config": {
+    "files": "{}",
+    "startup": "{\"done\":\"WEBVNC READY\"}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\necho 'This egg uses a prebuilt/custom Docker image. No install script.'\n",
+      "container": "debian:bookworm-slim",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "VNC Password",
+      "description": "Password required to connect in noVNC.",
+      "env_variable": "VNC_PASSWORD",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|min:8|max:64"
+    },
+    {
+      "name": "Resolution",
+      "description": "Desktop resolution.",
+      "env_variable": "VNC_RESOLUTION",
+      "default_value": "1280x720",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|max:20"
+    },
+    {
+      "name": "Color depth",
+      "description": "VNC color depth (lower saves RAM).",
+      "env_variable": "VNC_DEPTH",
+      "default_value": "24",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|integer|in:8,16,24"
+    },
+    {
+      "name": "Public Host (for console URL)",
+      "description": "Optional: Node IP or domain to print a clickable noVNC URL in the console (e.g. 45.145.40.189 or node.example.com).",
+      "env_variable": "PUBLIC_HOST",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:255"
+    },
+    {
+      "name": "Public Protocol",
+      "description": "Optional: Protocol used in the printed URL (http or https). Use https if you reverse-proxy noVNC behind TLS.",
+      "env_variable": "PUBLIC_PROTO",
+      "default_value": "http",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|in:http,https"
+    }
+  ]
+}
